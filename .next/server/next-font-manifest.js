@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST='{"pages":{},"app":{"/workspaces/ContactPolice/app/layout":["static/media/427e4a37d3642943-s.p.woff2","static/media/36966cca54120369-s.p.woff2"]},"appUsingSizeAdjust":true,"pagesUsingSizeAdjust":false}';

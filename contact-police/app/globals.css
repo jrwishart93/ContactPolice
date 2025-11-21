@@ -1,0 +1,93 @@
+diff --git a/contact-police/app/globals.css b/contact-police/app/globals.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..d59f9f092da0750723254d9f7391d967e0c8b4fc
+--- /dev/null
++++ b/contact-police/app/globals.css
+@@ -0,0 +1,87 @@
++@import "tailwindcss";
++
++:root {
++  --background: #030305;
++  --foreground: #e5e7eb;
++}
++
++@theme inline {
++  --color-background: var(--background);
++  --color-foreground: var(--foreground);
++  --font-sans: var(--font-space);
++  --font-mono: var(--font-mono);
++}
++
++body {
++  background: var(--background);
++  color: var(--foreground);
++  font-family: var(--font-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
++    Consolas, "Liberation Mono", "Courier New", monospace;
++  min-height: 100vh;
++}
++
++.font-space {
++  font-family: var(--font-space), "Space Grotesk", "Inter", system-ui, -apple-system, sans-serif;
++}
++
++.font-mono {
++  font-family: var(--font-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
++    Consolas, "Liberation Mono", "Courier New", monospace;
++}
++
++.bg-grid {
++  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
++  background-size: 40px 40px;
++}
++
++.glow-ring {
++  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 20px 80px rgba(59, 130, 246, 0.08),
++    inset 0 1px 0 rgba(255, 255, 255, 0.08);
++}
++
++@keyframes shine {
++  0% {
++    transform: translateX(-100%);
++  }
++  100% {
++    transform: translateX(200%);
++  }
++}
++
++.animate-shine::before {
++  content: "";
++  position: absolute;
++  inset: -200%;
++  width: 140%;
++  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
++  transform: translateX(-100%);
++  animation: shine 1.5s linear infinite;
++}
++
++@keyframes pulse-glow {
++  0% {
++    opacity: 0.4;
++    transform: scale(1);
++  }
++  50% {
++    opacity: 0.9;
++    transform: scale(1.05);
++  }
++  100% {
++    opacity: 0.4;
++    transform: scale(1);
++  }
++}
++
++.pulse-glow {
++  animation: pulse-glow 4s ease-in-out infinite;
++}
++
++::-webkit-scrollbar {
++  width: 8px;
++}
++
++::-webkit-scrollbar-thumb {
++  background: rgba(255, 255, 255, 0.15);
++  border-radius: 9999px;
++}

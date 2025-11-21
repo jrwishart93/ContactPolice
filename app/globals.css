@@ -1,0 +1,18 @@
+/* Minimal globals.css so Next layout import resolves */
+:root {
+  --font-space: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #030305;
+  color: #fff;
+}
+
+/* simple utility used in project */
+.bg-grid { background-image: linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 32px 32px; }
