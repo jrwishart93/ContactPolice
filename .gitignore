@@ -1,3 +1,14 @@
+# Node
+node_modules/
+package-lock.json
+
+# Next.js
+.next/
+out/
+
+# Misc
+.DS_Store
+.env*
 diff --git a/contact-police/.gitignore b/contact-police/.gitignore
 new file mode 100644
 index 0000000000000000000000000000000000000000..5ef6a520780202a1d6addd833d800ccb1ecac0bb
