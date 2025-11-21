@@ -23,7 +23,7 @@ export const OfficerCard = ({ id, name, collar, rank, delay }: OfficerProps) => 
         className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-md transition-colors duration-500 hover:border-white/30 hover:bg-white/[0.05]"
       >
         {/* Hover Gradient */}
-        <div className="absolute -inset-full top-0 block h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 blur-2xl group-hover:animate-shine" />
+        <div className="card-sheen" aria-hidden />
 
         <div className="relative z-10 flex flex-col h-full justify-between">
           <div className="flex justify-between items-start">

@@ -26,7 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} bg-[#030305] text-white antialiased selection:bg-white/20`}>
+      <body
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} bg-[#030305] text-white antialiased selection:bg-white/20`}
+      >
         {children}
       </body>
     </html>

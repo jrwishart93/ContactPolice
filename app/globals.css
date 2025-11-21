@@ -1,18 +1,98 @@
-/* Minimal globals.css so Next layout import resolves */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
+  color-scheme: dark;
+  background-color: #030305;
   --font-space: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-html, body, #__next {
-  height: 100%;
+* {
+  box-sizing: border-box;
 }
 
 body {
+  min-height: 100vh;
   margin: 0;
   background: #030305;
   color: #fff;
+  font-family: var(--font-space);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* simple utility used in project */
-.bg-grid { background-image: linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 32px 32px; }
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.font-space {
+  font-family: var(--font-space);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.02em;
+  }
+
+  input,
+  button,
+  textarea {
+    font: inherit;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-150%);
+  }
+  100% {
+    transform: translateX(150%);
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .card-sheen {
+    position: absolute;
+    inset: -150% 0 auto;
+    height: 100%;
+    width: 50%;
+    transform: skewX(-12deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    filter: blur(10px);
+    opacity: 0;
+  }
+
+  .group:hover .card-sheen {
+    opacity: 0.6;
+    animation: shine 1.15s ease-in-out forwards;
+  }
+
+  .glass-surface {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(18px);
+  }
+}
