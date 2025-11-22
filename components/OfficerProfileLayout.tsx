@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, Shield, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import type { Officer } from '@/lib/officerData';
 
 interface OfficerProfileLayoutProps {
@@ -11,6 +13,65 @@ interface OfficerProfileLayoutProps {
 
 export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
   const isPrimaryProfile = officer.id.toUpperCase() === 'T329';
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    reason: 'Request update on an incident',
+    incidentDate: '',
+    incidentNumber: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          officerId: officer.id,
+          officerName: `${officer.rank} ${officer.name}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data?.success) {
+        throw new Error(data?.error || 'Unable to submit enquiry.');
+      }
+
+      setStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        reason: 'Request update on an incident',
+        incidentDate: '',
+        incidentNumber: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Error sending enquiry', error);
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Something went wrong.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -189,14 +250,18 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
               effectively. Do not use this for emergencies.
             </p>
 
-            {/* NOTE: front-end only – backend wiring can be added later */}
-            <form className="mt-5 grid gap-4 text-xs font-mono text-white/80 md:grid-cols-2">
+            <form
+              className="mt-5 grid gap-4 text-xs font-mono text-white/80 md:grid-cols-2"
+              onSubmit={handleSubmit}
+            >
               <div className="md:col-span-1">
                 <label className="mb-1 block uppercase tracking-wide text-white/40">
                   Your name
                 </label>
                 <input
                   type="text"
+                  value={formData.name}
+                  onChange={(event) => handleChange('name', event.target.value)}
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
@@ -206,6 +271,8 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                 </label>
                 <input
                   type="email"
+                  value={formData.email}
+                  onChange={(event) => handleChange('email', event.target.value)}
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
@@ -216,6 +283,8 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                 </label>
                 <input
                   type="tel"
+                  value={formData.phone}
+                  onChange={(event) => handleChange('phone', event.target.value)}
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
@@ -224,7 +293,11 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                 <label className="mb-1 block uppercase tracking-wide text-white/40">
                   Reason for contact
                 </label>
-                <select className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400">
+                <select
+                  className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
+                  value={formData.reason}
+                  onChange={(event) => handleChange('reason', event.target.value)}
+                >
                   <option>Request update on an incident</option>
                   <option>Provide further information</option>
                   <option>Request incident / reference number</option>
@@ -238,6 +311,8 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                 </label>
                 <input
                   type="date"
+                  value={formData.incidentDate}
+                  onChange={(event) => handleChange('incidentDate', event.target.value)}
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
@@ -248,6 +323,8 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                 </label>
                 <input
                   type="text"
+                  value={formData.incidentNumber}
+                  onChange={(event) => handleChange('incidentNumber', event.target.value)}
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
@@ -258,16 +335,27 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                 </label>
                 <textarea
                   rows={5}
+                  value={formData.message}
+                  onChange={(event) => handleChange('message', event.target.value)}
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
 
-              <div className="md:col-span-2 flex justify-end">
+              <div className="md:col-span-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div className="text-xs font-mono">
+                  {status === 'success' && (
+                    <span className="text-emerald-300">Enquiry sent successfully.</span>
+                  )}
+                  {status === 'error' && (
+                    <span className="text-red-300">{errorMessage || 'Unable to send enquiry.'}</span>
+                  )}
+                </div>
                 <button
                   type="submit"
-                  className="rounded-full bg-emerald-500/90 px-5 py-2.5 text-xs font-mono font-semibold text-black hover:bg-emerald-400"
+                  className="rounded-full bg-emerald-500/90 px-5 py-2.5 text-xs font-mono font-semibold text-black hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-emerald-500/40"
+                  disabled={isSubmitting}
                 >
-                  Submit enquiry (demo)
+                  {isSubmitting ? 'Sending…' : 'Submit enquiry'}
                 </button>
               </div>
             </form>
