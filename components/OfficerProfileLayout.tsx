@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import type { Officer } from '@/lib/officerData';
+import PoliceScotlandLogo from '@/components/PoliceScotlandLogo';
 
 interface OfficerProfileLayoutProps {
   officer: Officer;
@@ -89,6 +90,10 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
           <span className="uppercase tracking-[0.18em]">
             PROFILE / {officer.id.toUpperCase()}
           </span>
+        </div>
+
+        <div className="flex justify-center mt-8 mb-6">
+          <PoliceScotlandLogo />
         </div>
 
         {/* Hero + ID Card */}

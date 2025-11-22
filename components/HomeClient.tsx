@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Search, ShieldAlert, Lock, ChevronRight, Menu } from 'lucide-react';
 import LiquidBackground from '@/components/LiquidBackground';
 import { OfficerCard } from '@/components/OfficerCard';
+import PoliceScotlandLogo from '@/components/PoliceScotlandLogo';
 
 // Mock Data
 const officers = [
@@ -75,6 +76,10 @@ export default function HomeClient() {
           </motion.div>
         </div>
       </section>
+
+      <div className="relative z-10 mt-12 md:mt-16 flex justify-center">
+        <PoliceScotlandLogo />
+      </div>
 
       <section className="relative z-10 py-20 px-6 border-t border-white/5">
         <div className="mx-auto max-w-7xl">
