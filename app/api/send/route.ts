@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import officers from '@/lib/officerData';
 
-const TO_EMAIL = 'jrwishart@hotmail.co.uk';
+const DEFAULT_TO_EMAIL = 'jrwishart@hotmail.co.uk';
 const FROM_EMAIL = 'Contact Police <noreply@contactpolice.uk>';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_jSdbgVhd_FHbkEwXhC9RD6knGo2NZNRRk';
 
@@ -51,9 +52,15 @@ export async function POST(req: Request) {
       <p>${message.replace(/\n/g, '<br/>')}</p>
     `;
 
+    const matchedOfficer = officers.find(
+      (entry) => entry.id.toLowerCase() === (officerId as string | undefined)?.toLowerCase()
+    );
+
+    const toEmail = matchedOfficer?.email || DEFAULT_TO_EMAIL;
+
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
-      to: TO_EMAIL,
+      to: toEmail,
       subject: 'New ContactPolice.uk Submission',
       html,
       replyTo: email,

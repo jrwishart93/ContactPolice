@@ -20,7 +20,7 @@ const officers: Officer[] = [
     force: "Police Scotland",
     unit: "Road Policing Unit",
     division: "Edinburgh",
-    email: "1898907@scotland.police.uk",
+    email: "jrwishart@hotmail.co.uk",
     telHint: "101 (ask for PC Wishart T329, Road Policing)",
     numericId: "1898907",
   },
