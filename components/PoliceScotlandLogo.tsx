@@ -2,209 +2,191 @@
 
 import { motion } from 'framer-motion';
 
-const draw = {
-  hidden: { pathLength: 0, opacity: 0 },
-  visible: (i: number) => ({
-    pathLength: 1,
-    opacity: 1,
-    transition: {
-      pathLength: { delay: i * 0.1, type: 'spring', duration: 2, bounce: 0 },
-      opacity: { delay: i * 0.1, duration: 0.01 },
-    },
-  }),
-};
+export const PoliceScotlandLogo = () => {
+  // Drawing animation configuration
+  const draw = {
+    hidden: { pathLength: 0, opacity: 0 },
+    visible: (i: number) => ({
+      pathLength: 1,
+      opacity: 1,
+      transition: {
+        pathLength: { delay: i * 0.05, type: "spring", duration: 2.5, bounce: 0 },
+        opacity: { delay: i * 0.05, duration: 0.01 }
+      }
+    })
+  };
 
-export default function PoliceScotlandLogo() {
   return (
-    <div className="flex flex-col items-center justify-center p-4 select-none">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
-        className="relative w-64 h-auto md:w-80 flex flex-col items-center"
+    <div className="flex flex-col items-center justify-center p-6 select-none">
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5 }}
+        className="relative w-64 md:w-80 flex flex-col items-center"
       >
-        <div className="absolute top-10 inset-x-0 h-40 bg-blue-900/30 blur-[60px] rounded-full pointer-events-none" />
+        
+        {/* Subtle Blue Atmosphere Glow (Behind) */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-blue-900/20 blur-[80px] rounded-full pointer-events-none" />
 
-        <motion.svg
-          viewBox="0 0 300 380"
+        <svg
+          viewBox="0 0 400 550"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="w-full h-full drop-shadow-2xl"
-          initial="hidden"
-          animate="visible"
+          aria-label="Police Scotland Crest"
         >
-          <g id="crown">
-            <motion.path
-              d="M110 60 H190 L195 45 H105 L110 60 Z"
-              stroke="white"
-              strokeWidth="2"
-              fill="none"
-              variants={draw}
-              custom={0}
-            />
-            <motion.path
-              d="M105 45 Q 100 15, 150 5 Q 200 15, 195 45"
-              stroke="white"
-              strokeWidth="2"
-              fill="none"
-              variants={draw}
-              custom={0.2}
-            />
-            <motion.path
-              d="M150 5 V15 M145 10 H155"
-              stroke="white"
-              strokeWidth="2"
-              variants={draw}
-              custom={0.3}
-            />
-            <motion.path
-              d="M125 45 Q 135 25, 150 25 Q 165 25, 175 45"
-              stroke="white"
-              strokeWidth="1.5"
-              variants={draw}
-              custom={0.4}
-            />
-          </g>
+          {/* DEFINITIONS: Reusable Patterns */}
+          <defs>
+            {/* Diamond Scale Pattern for Thistle Body */}
+            <pattern id="diamondScales" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="18" height="18" fill="none" stroke="white" strokeWidth="1.5" />
+            </pattern>
+          </defs>
 
-          <g id="thistle">
-            <motion.path
-              d="M125 75 Q 115 95, 130 105 H 170 Q 185 95, 175 75"
-              stroke="white"
-              strokeWidth="2"
-              fill="none"
-              variants={draw}
-              custom={1}
-            />
-            {[135, 140, 145, 150, 155, 160, 165].map((x, i) => (
-              <motion.line
-                key={i}
-                x1={x}
-                y1="105"
-                x2={x + (i - 3) * 1.5}
-                y2="80"
-                stroke="white"
-                strokeWidth="1"
-                variants={draw}
-                custom={1.2 + i * 0.05}
-              />
-            ))}
-
-            <motion.path
-              d="M130 105 C 120 130, 120 155, 150 170 C 180 155, 180 130, 170 105"
-              stroke="white"
-              strokeWidth="2.5"
-              fill="#000"
-              variants={draw}
-              custom={1.5}
-            />
-
-            <defs>
-              <clipPath id="bulbClip">
-                <path d="M130 105 C 120 130, 120 155, 150 170 C 180 155, 180 130, 170 105 Z" />
-              </clipPath>
-            </defs>
-            <g clipPath="url(#bulbClip)" stroke="white" strokeWidth="1" strokeOpacity="0.7">
-              <motion.path
-                d="M120 120 L160 170 M120 140 L145 175 M130 100 L180 160 M150 100 L185 140"
-                variants={draw}
-                custom={2}
-              />
-              <motion.path
-                d="M180 120 L140 170 M180 140 L155 175 M170 100 L120 160 M150 100 L115 140"
-                variants={draw}
-                custom={2.2}
-              />
-            </g>
-          </g>
-
+          {/* --- 1. THE LEAVES (The Wreath) --- */}
+          {/* High-detail serrated paths to match the image exactly */}
           <g id="leaves">
+            {/* Left Leaf - 5 distinct spikes */}
             <motion.path
-              d="M120 160 L100 155 L110 140 L90 130 L105 115 L85 100 L110 80"
-              stroke="white"
-              strokeWidth="2"
-              fill="none"
-              strokeLinejoin="bevel"
-              variants={draw}
-              custom={2.5}
+              d="M200 400 
+                 L180 390 L130 360 L160 340 
+                 L120 300 L155 280 
+                 L115 230 L155 220 
+                 L125 170 L165 180 
+                 L160 130 L200 160" 
+              stroke="white" strokeWidth="3" fill="black" strokeLinejoin="miter" strokeMiterlimit="10"
+              variants={draw} custom={3}
             />
+            {/* Right Leaf - Mirror of Left */}
             <motion.path
-              d="M180 160 L200 155 L190 140 L210 130 L195 115 L215 100 L190 80"
-              stroke="white"
-              strokeWidth="2"
-              fill="none"
-              strokeLinejoin="bevel"
-              variants={draw}
-              custom={2.5}
+              d="M200 400 
+                 L220 390 L270 360 L240 340 
+                 L280 300 L245 280 
+                 L285 230 L245 220 
+                 L275 170 L235 180 
+                 L240 130 L200 160"
+              stroke="white" strokeWidth="3" fill="black" strokeLinejoin="miter" strokeMiterlimit="10"
+              variants={draw} custom={3}
             />
           </g>
 
-          <motion.path
-            d="M90 180 L85 195 H215 L210 180 Q 150 210 90 180 Z"
-            stroke="white"
-            strokeWidth="2"
-            fill="black"
-            variants={draw}
-            custom={3}
-          />
-          <motion.text
-            x="150"
-            y="196"
-            textAnchor="middle"
-            fill="white"
-            fontSize="11"
-            fontFamily="serif"
-            fontWeight="bold"
-            letterSpacing="0.2em"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 3, duration: 1 }}
-          >
-            SEMPER VIGILO
-          </motion.text>
+          {/* --- 2. THE THISTLE (Centerpiece) --- */}
+          <g id="thistle">
+            {/* The Top Brush (Fan) */}
+            <motion.path
+              d="M165 160 Q 160 130, 200 120 Q 240 130, 235 160 Z"
+              stroke="white" strokeWidth="2.5" fill="black"
+              variants={draw} custom={1}
+            />
+            {/* Brush Vertical Details */}
+            <motion.path d="M200 120 V160 M185 125 L190 160 M215 125 L210 160" stroke="white" strokeWidth="1.5" variants={draw} custom={1.2} />
 
-          <text
-            x="150"
-            y="245"
-            textAnchor="middle"
-            fill="white"
-            fontSize="42"
-            fontFamily="sans-serif"
-            fontWeight="bold"
-            letterSpacing="0.05em"
-          >
+            {/* The Bulb (Body) */}
+            {/* Using mask to apply diamond pattern only inside the bulb */}
+            <mask id="bulbMask">
+              <path d="M165 160 C 150 200, 150 250, 200 280 C 250 250, 250 200, 235 160 Z" fill="white" />
+            </mask>
+            
+            {/* Bulb Outline */}
+            <motion.path
+              d="M165 160 C 150 200, 150 250, 200 280 C 250 250, 250 200, 235 160 Z"
+              stroke="white" strokeWidth="3" fill="black"
+              variants={draw} custom={1.5}
+            />
+            
+            {/* The Lattice Pattern Fill */}
+            <motion.rect 
+              x="150" y="160" width="100" height="120" 
+              fill="url(#diamondScales)" 
+              mask="url(#bulbMask)"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+            />
+
+            {/* The Sepals (Spikes at bottom of bulb) */}
+            <motion.path 
+               d="M175 265 L180 290 L200 280 L220 290 L225 265"
+               stroke="white" strokeWidth="2" fill="black"
+               variants={draw} custom={2}
+            />
+          </g>
+
+          {/* --- 3. THE CROWN (St Edward's / Scottish Hybrid) --- */}
+          <g id="crown" transform="translate(0, -10)">
+             {/* Base Rim */}
+             <motion.path 
+               d="M150 110 L145 90 H255 L250 110 H150 Z" 
+               stroke="white" strokeWidth="2.5" fill="black"
+               variants={draw} custom={0}
+             />
+             {/* Jewels on Rim */}
+             <circle cx="170" cy="100" r="3" fill="white" />
+             <circle cx="200" cy="100" r="4" fill="white" />
+             <circle cx="230" cy="100" r="3" fill="white" />
+
+             {/* Arches */}
+             <motion.path
+               d="M145 90 Q 140 40, 200 30 Q 260 40, 255 90"
+               stroke="white" strokeWidth="2.5" fill="none"
+               variants={draw} custom={0.2}
+             />
+             <motion.path
+               d="M200 30 V90" stroke="white" strokeWidth="1" variants={draw} custom={0.3}
+             />
+
+             {/* Orb & Cross at Top */}
+             <circle cx="200" cy="25" r="6" fill="black" stroke="white" strokeWidth="2" />
+             <motion.path 
+               d="M200 19 V5 M194 12 H206" 
+               stroke="white" strokeWidth="2.5"
+               variants={draw} custom={0.4}
+             />
+          </g>
+
+          {/* --- 4. THE BANNER --- */}
+          <g id="banner">
+            <motion.path
+              d="M120 380 L120 405 L200 425 L280 405 L280 380 L200 400 L120 380 Z"
+              stroke="white" strokeWidth="2.5" fill="black"
+              variants={draw} custom={4}
+            />
+            <motion.text
+              x="200" y="408" textAnchor="middle"
+              fill="white" fontSize="14" fontFamily="Arial, sans-serif" fontWeight="bold" letterSpacing="0.2em"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }}
+            >
+              SEMPER VIGILO
+            </motion.text>
+          </g>
+
+          {/* --- 5. TYPOGRAPHY (Matched Hierarchy) --- */}
+          
+          {/* "POLICE" - Extra Bold, Sans Serif */}
+          <text x="200" y="475" textAnchor="middle" fill="white" fontSize="58" fontFamily="Arial, Helvetica, sans-serif" fontWeight="900" letterSpacing="0.02em">
             POLICE
           </text>
-
-          <text
-            x="150"
-            y="285"
-            textAnchor="middle"
-            fill="white"
-            fontSize="42"
-            fontFamily="sans-serif"
-            fontWeight="300"
-            letterSpacing="0.05em"
-          >
+          
+          {/* "SCOTLAND" - Regular weight, same width */}
+          <text x="200" y="520" textAnchor="middle" fill="white" fontSize="58" fontFamily="Arial, Helvetica, sans-serif" fontWeight="400" letterSpacing="0.02em">
             SCOTLAND
           </text>
 
-          <motion.line
-            x1="50"
-            y1="300"
-            x2="250"
-            y2="300"
-            stroke="white"
-            strokeWidth="1.5"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
+          {/* Horizontal Rule */}
+          <motion.line 
+             x1="50" y1="535" x2="350" y2="535" 
+             stroke="white" strokeWidth="2"
+             initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1.5, duration: 1 }}
           />
 
-          <text x="150" y="330" textAnchor="middle" fill="white" fontSize="24" fontFamily="sans-serif" fontWeight="400">
+          {/* Tagline */}
+          <text x="200" y="565" textAnchor="middle" fill="white" fontSize="32" fontFamily="Arial, Helvetica, sans-serif" fontWeight="400">
             Keeping people safe
           </text>
-        </motion.svg>
+
+        </svg>
       </motion.div>
     </div>
   );
-}
+};
+
+export default PoliceScotlandLogo;
