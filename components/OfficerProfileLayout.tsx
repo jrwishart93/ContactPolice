@@ -249,6 +249,10 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
               This form helps you provide the key details needed to locate your incident and respond
               effectively. Do not use this for emergencies.
             </p>
+            <p className="mt-1 font-mono text-[11px] text-white/40">
+              Enquiries are securely routed through Resend and delivered directly to the duty
+              officer.
+            </p>
 
             <form
               className="mt-5 grid gap-4 text-xs font-mono text-white/80 md:grid-cols-2"
@@ -262,6 +266,7 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                   type="text"
                   value={formData.name}
                   onChange={(event) => handleChange('name', event.target.value)}
+                  required
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
@@ -273,6 +278,7 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                   type="email"
                   value={formData.email}
                   onChange={(event) => handleChange('email', event.target.value)}
+                  required
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>
@@ -337,6 +343,7 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
                   rows={5}
                   value={formData.message}
                   onChange={(event) => handleChange('message', event.target.value)}
+                  required
                   className="w-full rounded-lg border border-white/15 bg-black/50 px-3 py-2 outline-none focus:border-emerald-400"
                 />
               </div>

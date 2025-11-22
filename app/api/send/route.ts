@@ -3,17 +3,16 @@ import { Resend } from 'resend';
 
 const TO_EMAIL = 'jrwishart@hotmail.co.uk';
 const FROM_EMAIL = 'Contact Police <noreply@contactpolice.uk>';
+const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_jSdbgVhd_FHbkEwXhC9RD6knGo2NZNRRk';
 
 export async function POST(req: Request) {
   try {
-    const apiKey = process.env.RESEND_API_KEY;
-
-    if (!apiKey) {
+    if (!RESEND_API_KEY) {
       console.error('RESEND_API_KEY is not configured.');
       return NextResponse.json({ success: false, error: 'Email service not configured.' }, { status: 500 });
     }
 
-    const resend = new Resend(apiKey);
+    const resend = new Resend(RESEND_API_KEY);
     const body = await req.json();
 
     const {
