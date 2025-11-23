@@ -4,7 +4,13 @@ import officers from '@/lib/officerData';
 
 const DEFAULT_TO_EMAIL = 'jrwishart@hotmail.co.uk';
 const FROM_EMAIL = 'Contact Police <noreply@contactpolice.uk>';
-const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_jSdbgVhd_FHbkEwXhC9RD6knGo2NZNRRk';
+const resendApiKey = process.env.RESEND_API_KEY;
+
+if (!resendApiKey) {
+  throw new Error('RESEND_API_KEY is missing. Add it to your environment variables.');
+}
+
+const resend = new Resend(resendApiKey);
 
 const sanitizeInput = (value: unknown, maxLength = 2000) =>
   typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -19,12 +25,6 @@ const escapeHtml = (input: string) =>
 
 export async function POST(req: Request) {
   try {
-    if (!RESEND_API_KEY) {
-      console.error('RESEND_API_KEY is not configured.');
-      return NextResponse.json({ success: false, error: 'Email service not configured.' }, { status: 500 });
-    }
-
-    const resend = new Resend(RESEND_API_KEY);
     const body = await req.json();
 
     const name = sanitizeInput(body?.name, 120);
