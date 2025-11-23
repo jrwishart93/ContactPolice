@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
+import { ConstructionBanner } from "@/components/ConstructionBanner";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} bg-[#030305] text-white antialiased selection:bg-white/20`}
       >
+        <ConstructionBanner />
         <div className="min-h-screen flex flex-col">
           <div className="flex-1">{children}</div>
           <footer className="border-t border-white/10 bg-black/40">
