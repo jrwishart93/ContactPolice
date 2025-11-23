@@ -6,6 +6,17 @@ const DEFAULT_TO_EMAIL = 'jrwishart@hotmail.co.uk';
 const FROM_EMAIL = 'Contact Police <noreply@contactpolice.uk>';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_jSdbgVhd_FHbkEwXhC9RD6knGo2NZNRRk';
 
+const sanitizeInput = (value: unknown, maxLength = 2000) =>
+  typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
+
+const escapeHtml = (input: string) =>
+  input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 export async function POST(req: Request) {
   try {
     if (!RESEND_API_KEY) {
@@ -16,24 +27,24 @@ export async function POST(req: Request) {
     const resend = new Resend(RESEND_API_KEY);
     const body = await req.json();
 
-    const {
-      name,
-      email,
-      phone,
-      message,
-      incidentNumber,
-      incidentDate,
-      reason,
-      officerId,
-      officerName,
-    } = body || {};
+    const name = sanitizeInput(body?.name, 120);
+    const email = sanitizeInput(body?.email, 120);
+    const phone = sanitizeInput(body?.phone, 60);
+    const message = sanitizeInput(body?.message);
+    const incidentNumber = sanitizeInput(body?.incidentNumber, 120);
+    const incidentDate = sanitizeInput(body?.incidentDate, 60);
+    const reason = sanitizeInput(body?.reason, 180);
+    const officerId = sanitizeInput(body?.officerId, 40);
+    const officerName = sanitizeInput(body?.officerName, 160);
 
-    if (!name || !email || !message) {
+    if (!name || !email || !message || !officerId) {
       return NextResponse.json(
-        { success: false, error: 'Name, email, and message are required.' },
+        { success: false, error: 'Name, email, message, and officer are required.' },
         { status: 400 }
       );
     }
+
+    const safeMessage = escapeHtml(message).replace(/\n/g, '<br/>');
 
     const html = `
       <h2>New ContactPolice.uk Submission</h2>
@@ -42,14 +53,14 @@ export async function POST(req: Request) {
           ? `${officerName} (${officerId.toUpperCase()})`
           : 'Not specified'
       }</p>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
-      <p><strong>Reason:</strong> ${reason || 'N/A'}</p>
-      <p><strong>Incident Date:</strong> ${incidentDate || 'N/A'}</p>
-      <p><strong>Incident Number:</strong> ${incidentNumber || 'N/A'}</p>
+      <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(phone || 'N/A')}</p>
+      <p><strong>Reason:</strong> ${escapeHtml(reason || 'N/A')}</p>
+      <p><strong>Incident Date:</strong> ${escapeHtml(incidentDate || 'N/A')}</p>
+      <p><strong>Incident Number:</strong> ${escapeHtml(incidentNumber || 'N/A')}</p>
       <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, '<br/>')}</p>
+      <p>${safeMessage}</p>
     `;
 
     const matchedOfficer = officers.find(
@@ -67,13 +78,13 @@ export async function POST(req: Request) {
     });
 
     if (error) {
-      console.error('Resend email error:', error);
+      console.error('Resend email error:', error instanceof Error ? error.message : 'Unknown error');
       return NextResponse.json({ success: false, error: 'Failed to send email.' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    console.error('Error handling send request:', error);
+    console.error('Error handling send request:', error instanceof Error ? error.message : 'Unknown error');
     return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 500 });
   }
 }
