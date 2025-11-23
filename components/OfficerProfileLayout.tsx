@@ -258,6 +258,13 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
               Enquiries are securely routed through Resend and delivered directly to the duty
               officer.
             </p>
+            <p className="mt-3 text-[11px] font-mono text-white/50">
+              Read our{" "}
+              <Link href="/privacy" className="underline decoration-white/30 underline-offset-4 hover:text-white">
+                Privacy Notice
+              </Link>
+              {" "}before submitting.
+            </p>
 
             <form
               className="mt-5 grid gap-4 text-xs font-mono text-white/80 md:grid-cols-2"
@@ -354,7 +361,19 @@ export function OfficerProfileLayout({ officer }: OfficerProfileLayoutProps) {
               </div>
 
               <div className="md:col-span-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <div className="text-xs font-mono">
+                <div className="text-xs font-mono text-white/70 md:max-w-xl">
+                  <p>
+                    By submitting this form you confirm that this is non-urgent follow-up
+                    information, that you will not use this site to report crime, and that you have
+                    read and understood our{' '}
+                    <Link
+                      href="/privacy"
+                      className="underline decoration-white/30 underline-offset-4 hover:text-white"
+                    >
+                      Privacy Notice
+                    </Link>
+                    .
+                  </p>
                   {status === 'success' && (
                     <span className="text-emerald-300">Enquiry sent successfully.</span>
                   )}
