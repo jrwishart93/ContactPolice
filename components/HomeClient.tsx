@@ -45,6 +45,10 @@ export default function HomeClient() {
         </div>
       </nav>
 
+      <div className="absolute right-4 top-28 md:right-8 md:top-24 lg:right-16 lg:top-20 z-40">
+        <PoliceScotlandLogo className="scale-75 md:scale-90" />
+      </div>
+
       <section className="relative z-10 pt-40 pb-20 px-6">
         <div className="mx-auto max-w-7xl">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }} className="max-w-3xl">
@@ -76,10 +80,6 @@ export default function HomeClient() {
           </motion.div>
         </div>
       </section>
-
-      <div className="relative z-10 mt-12 md:mt-16 flex justify-center">
-        <PoliceScotlandLogo />
-      </div>
 
       <section className="relative z-10 py-20 px-6 border-t border-white/5">
         <div className="mx-auto max-w-7xl">

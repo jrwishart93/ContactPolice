@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-export const PoliceScotlandLogo = () => {
+export const PoliceScotlandLogo = ({ className = '' }: { className?: string }) => {
   // Animation Variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -43,7 +43,7 @@ export const PoliceScotlandLogo = () => {
       whileInView="visible"
       viewport={{ once: true }}
       variants={containerVariants}
-      className="flex flex-col items-center justify-center p-8 select-none group cursor-pointer perspective-1000"
+      className={`flex flex-col items-center justify-center p-8 select-none group cursor-pointer perspective-1000 ${className}`}
     >
       
       {/* Container with interactive hover effects */}
